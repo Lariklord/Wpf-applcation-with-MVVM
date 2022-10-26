@@ -1,0 +1,70 @@
+﻿<Window x:Class="TestTask.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestTask" xmlns:models="clr-namespace:TestTask.Models"
+        mc:Ignorable="d"
+        Title="TestTask" Height="450" Width="800" ResizeMode="NoResize" ShowInTaskbar="True" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style TargetType="MenuItem">
+            <Setter Property="ClipToBounds" Value="True"></Setter>
+            <Setter Property="FontSize" Value="15"></Setter>
+        </Style>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Menu x:Name="Menu" Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Command="{Binding OpenTextFile}"></MenuItem>
+                <MenuItem Header="Save" Command="{Binding SaveTextFile}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Sort">
+                <MenuItem x:Name="OrderBy" Header="Order by" Command="{Binding OrderBy}" CommandParameter="{Binding ElementName=OrderBy, Path=Header}"></MenuItem>
+                <MenuItem x:Name="OrderByDesc" Header="Order by descending" Command="{Binding OrderBy}" CommandParameter="{Binding ElementName=OrderByDesc, Path=Header}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Phone">
+                <MenuItem Header="Add" Command="{Binding AddPhone}"></MenuItem>
+                <MenuItem Header="Update" Command="{Binding UpdatePhone}"></MenuItem>
+                <MenuItem Header="Remove" Command="{Binding RemovePhones}"></MenuItem>
+            </MenuItem>
+        </Menu>
+        
+        <ScrollViewer x:Name="Scroll" Grid.Row="1">
+            <StackPanel>
+                <ListBox SelectionMode="Multiple"  ItemsSource="{Binding Phones}" SelectedItem="{Binding SelectedPhone}"  BorderThickness="2,2,2,2" ClipToBounds="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Padding="0,55,100,10" Text="{Binding Path=Name}" FontSize="48"></TextBlock>
+                                <Image Width="200" Height="200" Grid.Column="1" Source="{Binding Path=Url}"></Image>
+                                
+                            </Grid>
+                        
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Window>
